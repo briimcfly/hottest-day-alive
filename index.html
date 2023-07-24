@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link href="assets/css/main.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://kit.fontawesome.com/1d33aad484.css" crossorigin="anonymous">
   <script src ="assets/js/config.js"></script>
   <script src="assets/js/script.js" defer></script>
   <title>Hottest Day Alive</title>
@@ -20,8 +21,8 @@
         </div>
     </nav>
 
-    <section class ="container">
-        <section class="columns">
+    <div class ="container is-fluid">
+        <section id="main" class="columns">
             <div id="city-search" class = "box column is-one-third">
               <input class="input" type="text" placeholder="Search by City Name">
               <button class="button is-primary" type = "submit" onclick="findCity()">Search</button>
@@ -30,80 +31,69 @@
                 <div id="error-message" class="has-text-danger">City Name not Found, Please try again</div>
 
                 <div id = "recent" class = "columns">
-                  <h5 class = "column title is-5">Recent Searches</h5>
-                  <button id= "clear" class="button is-text column">Clear Recent</button>
+                  <h5 class = "column title is-5">Recent Cities</h5>
+                  <button id= "clear" class="button is-text column">Clear List</button>
                 </div>
                 <section id = "city-list" class = "is-flex-direction-column"></section>
               </div>
             </div>
             <div class ="column">
-                <div class = "box columns">
-                    <div class="card column mx-8">
-                        <div class="card-content">
-                          <p class="title">
-                            “There are two hard things in computer science: cache invalidation, naming things, and off-by-one errors.”
-                          </p>
-                          <p class="subtitle">
-                            Jeff Atwood
-                          </p>
-                        </div>
-                        <footer class="card-footer">
-                          <p class="card-footer-item">
-                            <span>
-                              View on <a href="https://twitter.com/codinghorror/status/506010907021828096">Twitter</a>
-                            </span>
-                          </p>
-                          <p class="card-footer-item">
-                            <span>
-                              Share on <a href="#">Facebook</a>
-                            </span>
-                          </p>
-                        </footer>
-                      </div>
-                      <div class="card column mx-8">
-                        <div class="card-content">
-                          <p class="title">
-                            “There are two hard things in computer science: cache invalidation, naming things, and off-by-one errors.”
-                          </p>
-                          <p class="subtitle">
-                            Jeff Atwood
-                          </p>
-                        </div>
-                        <footer class="card-footer">
-                          <p class="card-footer-item">
-                            <span>
-                              View on <a href="https://twitter.com/codinghorror/status/506010907021828096">Twitter</a>
-                            </span>
-                          </p>
-                          <p class="card-footer-item">
-                            <span>
-                              Share on <a href="#">Facebook</a>
-                            </span>
-                          </p>
-                        </footer>
-                      </div>
-                      <div class="card column mx-8">
-                        <div class="card-content">
-                          <p class="title">
-                            “There are two hard things in computer science: cache invalidation, naming things, and off-by-one errors.”
-                          </p>
-                          <p class="subtitle">
-                            Jeff Atwood
-                          </p>
-                        </div>
-                        <footer class="card-footer">
-                          <p class="card-footer-item">
-                            <span>
-                              View on <a href="https://twitter.com/codinghorror/status/506010907021828096">Twitter</a>
-                            </span>
-                          </p>
-                          <p class="card-footer-item">
-                            <span>
-                              Share on <a href="#">Facebook</a>
-                            </span>
-                          </p>
-                        </footer>
-                      </div>
+              <section id="current-weather">
+                <p class="title is-2">Sacramento (9/13/2022)</p>
+                <i class="fa-solid fa-clouds"></i>
+                <p>Temp: 75</p>
+                <p>Wind: 4.23MPH</p>
+                <p>Humidity: 62%</p>
+              </section>
+
+              <p class = "title is-5">5-Day Forecast:</p>              
+                <div id = "fiveday" class = "columns">
+                 
+                  <div class="card column mx-8">
+                    <div class="card-content">
+                      <p class="title is-5">09/08/2023</p>
+                      <i class="fa-solid fa-clouds"></i>
+                      <p>Temp: 75</p>
+                      <p>Wind: 4.23MPH</p>
+                      <p>Humidity: 62%</p>
+                    </div>
+                  </div>
+                  <div class="card column mx-8">
+                    <div class="card-content">
+                      <p class="title is-5">09/08/2023</p>
+                      <i class="fa-solid fa-clouds"></i>
+                      <p>Temp: 75</p>
+                      <p>Wind: 4.23MPH</p>
+                      <p>Humidity: 62%</p>
+                    </div>
+                  </div>
+                  <div class="card column mx-8">
+                    <div class="card-content">
+                      <p class="title is-5">09/08/2023</p>
+                      <i class="fa-solid fa-clouds"></i>
+                      <p>Temp: 75</p>
+                      <p>Wind: 4.23MPH</p>
+                      <p>Humidity: 62%</p>
+                    </div>
+                  </div>
+                  <div class="card column mx-8">
+                    <div class="card-content">
+                      <p class="title is-5">09/08/2023</p>
+                      <i class="fa-solid fa-clouds"></i>
+                      <p>Temp: 75</p>
+                      <p>Wind: 4.23MPH</p>
+                      <p>Humidity: 62%</p>
+                    </div>
+                  </div>
+                  <div class="card column mx-8">
+                    <div class="card-content">
+                      <p class="title is-5">09/08/2023</p>
+                      <i class="fa-solid fa-clouds"></i>
+                      <p>Temp: 75</p>
+                      <p>Wind: 4.23MPH</p>
+                      <p>Humidity: 62%</p>
+                    </div>
+                  </div>
                 </div>
             </div>
         </section>
@@ -111,7 +101,7 @@
 
         
 
-    </section>
+    </div>
 
 
 </body>
