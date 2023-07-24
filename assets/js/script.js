@@ -16,18 +16,8 @@ function clear(element){
     element.value="";
 }
 
-
-
-//Function runs on "Search" button click
-function findCity(){
-    // Get User Input 
-    var userEntered = input.value;
-    // Capitalize the User Input 
-    var multiWord = userEntered.toLowerCase().split(` `);
-    for(i = 0; i < multiWord.length; i++){
-        multiWord[i] = multiWord[i].charAt(0).toUpperCase() + multiWord[i].slice(1);
-    }
-    var cityName = multiWord.join(` `);
+//Fetch Function 
+function getData(cityName){
 
     //Query URL
     var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + APIKey + "&units=imperial";
@@ -107,12 +97,31 @@ function findCity(){
         fiveForecast(forecast);
 
     });
+}
 
+
+
+//Function runs on "Search" button click
+function findCity(userEntered){
+    // Get User Input 
+    userEntered = input.value;
+    // Capitalize the User Input 
+    var multiWord = userEntered.toLowerCase().split(` `);
+    for(i = 0; i < multiWord.length; i++){
+        multiWord[i] = multiWord[i].charAt(0).toUpperCase() + multiWord[i].slice(1);
+    }
+    var cityName = multiWord.join(` `);
+
+    getData(cityName);
 
 }
 
+
+
 //Create Forecast Function
 function fiveForecast(x){
+    //clear the previous elements
+    forecastEl.innerHTML = "";
     for (i=0; i < x.length; i++){
         var card = document.createElement(`div`);
         card.className = "card column mx-8";
@@ -141,19 +150,30 @@ function fiveForecast(x){
         var wSpeed = document.createElement(`p`);
         wSpeed.textContent = `Wind Speed: ${x[i].speed} MPH`;
         cardContent.append(wSpeed);
-
-        console.log(`on ${x[i].normalDate} the min temp is ${x[i].temp_min}`)
     }
 }
 
 //Create Button function 
 function createButton(cityName){
     var cityButton = document.createElement(`button`);
-    cityButton.className = "button is-light mb-8"
+    cityButton.className = "button is-light mb-8 citybtn"
     cityButton.textContent = cityName;
     document.querySelector("#city-list").append(cityButton)
-    recentBlock.style.visibility = "visible";
+    recentBlock.style.visibility = "visible";    
 }
+
+//Add Event Listners to City Buttons so Users can select previous searched city. 
+document.querySelector("#city-list").addEventListener('click', function(event) {
+    if (event.target.classList.contains('citybtn')) {
+        const buttons = document.querySelectorAll('.citybtn');
+        buttons.forEach(button => {
+            button.classList.remove('is-link');
+        });
+        console.log(event.target.textContent);
+        event.target.classList.add('is-link');
+        getData(event.target.textContent);
+    }
+});
 
 //Function that adds buttons for each element in cityNames
 function loadCities(){
