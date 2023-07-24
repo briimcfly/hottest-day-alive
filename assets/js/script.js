@@ -1,9 +1,12 @@
-const APIKey = '0040c54f9bc97c402ce34384520d63ae';
+const APIKey = config.MY_KEY;
 const input = document.querySelector(`input`);
 const recentBlock = document.querySelector('#recent');
 
 //Check local storage for any stored results 
 let storedCities = localStorage.getItem("cityNames");
+
+//If data exists, parse it.. else, return an empty array
+let cityNames = storedCities ? JSON.parse(storedCities) : [];
 
 console.log(storedCities);
 
@@ -28,8 +31,7 @@ function findCity(){
     
     fetch (queryURL)
     .then(function (response) {
-    //If data exists, parse it.. else, return an empty array
-    let cityNames = storedCities ? JSON.parse(storedCities) : [];
+  
 
         //if the response is good...
         if (response.status === 200 ) {
@@ -98,4 +100,5 @@ window.addEventListener('load', loadCities);
     localStorage.clear();
     document.querySelector('#city-list').innerHTML = "";
     recentBlock.style.visibility = "hidden";
+    location.reload();
  });
