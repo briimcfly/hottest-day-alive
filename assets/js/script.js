@@ -1,12 +1,3 @@
-// import Toast from `bulma-toast`;
-// const error = new Toast({
-//     message: `Please enter a valid city name`,
-//     type:`is-danger`,
-//     duration:5000,
-//     positon:`is-bottom-left`,
-//     dismissible: true
-// });
-
 const APIKey = '0040c54f9bc97c402ce34384520d63ae';
 const input = document.querySelector(`input`);
 
