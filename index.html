@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link href="assets/css/main.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="assets/js/script.js" defer></script>
   <title>Hottest Day Alive</title>
 </head>
@@ -23,7 +24,10 @@
             <div class = "box column is-one-third">
               <input class="input" type="text" placeholder="Search by City Name">
               <button class="button is-primary" type = "submit" onclick="findCity()">Search</button>
-
+            
+              <div id = "cities">
+                <div id="error-message" >City Name not Found, Please try again</div>
+              </div>
             </div>
             <div class ="column">
                 <div class = "box columns">
