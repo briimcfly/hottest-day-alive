@@ -9,8 +9,6 @@ let storedCities = localStorage.getItem("cityNames");
 //If data exists, parse it.. else, return an empty array
 let cityNames = storedCities ? JSON.parse(storedCities) : [];
 
-console.log(storedCities);
-
 //a function for clearing fields
 function clear(element){
     element.value="";
@@ -24,7 +22,6 @@ function getData(cityName){
     
     fetch (queryURL)
     .then(function (response) {
-  
 
         //if the response is good...
         if (response.status === 200 ) {
@@ -124,6 +121,7 @@ function fiveForecast(x){
     //clear the previous elements
     forecastEl.innerHTML = "";
     for (i=0; i < x.length; i++){
+        //card
         var card = document.createElement(`div`);
         card.className = "card column mx-8";
         forecastEl.append(card);
@@ -135,11 +133,11 @@ function fiveForecast(x){
         date.className = "title is-5";
         date.textContent = `${x[i].normalDate}`;
         cardContent.append(date);
-        //high
+        //high temp
         var high = document.createElement(`p`);
         high.textContent = `High: ${x[i].temp_max}`;
         cardContent.append(high);
-        //low
+        //low temp
         var low = document.createElement(`p`);
         low.textContent = `Low: ${x[i].temp_min}`;
         cardContent.append(low);
