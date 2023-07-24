@@ -22,18 +22,18 @@
 
     <section class ="container">
         <section class="columns">
-            <div class = "box column is-one-third">
+            <div id="city-search" class = "box column is-one-third">
               <input class="input" type="text" placeholder="Search by City Name">
               <button class="button is-primary" type = "submit" onclick="findCity()">Search</button>
             
               <div id = "cities">
-                <div id="error-message" >City Name not Found, Please try again</div>
+                <div id="error-message" class="has-text-danger">City Name not Found, Please try again</div>
 
                 <div id = "recent" class = "columns">
-                  <h3 class = "column">Recent Searches</h3>
+                  <h5 class = "column title is-5">Recent Searches</h5>
                   <button id= "clear" class="button is-text column">Clear Recent</button>
                 </div>
-                <div id = "city-list"></div>
+                <section id = "city-list" class = "is-flex-direction-column"></section>
               </div>
             </div>
             <div class ="column">

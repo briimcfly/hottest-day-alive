@@ -1,3 +1,21 @@
 #error-message, #recent{
     visibility:hidden;
 }
+
+#city-list{
+    display:flex;
+    gap:12px;
+}
+
+#city-search{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+#error-message {
+    display:flex;
+    justify-content:center;
+    margin-bottom:12px;
+}
+

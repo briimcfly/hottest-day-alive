@@ -75,7 +75,7 @@ function findCity(){
 //Create Button function 
 function createButton(cityName){
     var cityButton = document.createElement(`button`);
-    cityButton.className = "button is-light"
+    cityButton.className = "button is-light mb-8"
     cityButton.textContent = cityName;
     document.querySelector("#city-list").append(cityButton)
     recentBlock.style.visibility = "visible";
