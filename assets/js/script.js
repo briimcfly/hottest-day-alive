@@ -78,10 +78,10 @@ function findCity(){
                 const today = dayjs().format(`ddd`);
                 if(normalDate !== today){
                     if(organizedWeather.hasOwnProperty(normalDate)) {
-                        organizedWeather[normalDate].temp_min = Math.min(organizedWeather[normalDate].temp_min, Math.round(temp_min));
-                        organizedWeather[normalDate].temp_max = Math.max(organizedWeather[normalDate].temp_max, Math.round(temp_max));
-                        organizedWeather[normalDate].humidity = Math.max(organizedWeather[normalDate].humidity, Math.round(humidity));
-                        organizedWeather[normalDate].speed = Math.max(organizedWeather[normalDate].speed, Math.round(speed));
+                        organizedWeather[normalDate].temp_min = Math.min(organizedWeather[normalDate].temp_min, temp_min);
+                        organizedWeather[normalDate].temp_max = Math.max(organizedWeather[normalDate].temp_max, temp_max);
+                        organizedWeather[normalDate].humidity = Math.max(organizedWeather[normalDate].humidity, humidity);
+                        organizedWeather[normalDate].speed = Math.max(organizedWeather[normalDate].speed, speed);
                     }
                     else {
                         organizedWeather[normalDate] = {normalDate, temp_min, temp_max, humidity, speed};
