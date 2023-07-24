@@ -96,8 +96,16 @@ function findCity(){
         const forecast = organizeData(data);
         console.log(forecast);
         console.log(forecast[0].normalDate);
-        fiveForecast(forecast);
         console.log(forecast.length);
+        //Round all numbers
+        for (i=0; i < forecast.length; i++){
+            forecast[i].temp_min = Math.round(forecast[i].temp_min);
+            forecast[i].temp_max = Math.round(forecast[i].temp_max);
+            forecast[i].humidity = Math.round(forecast[i].humidity);
+            forecast[i].speed = Math.round(forecast[i].speed);
+        }
+        fiveForecast(forecast);
+
     });
 
 
