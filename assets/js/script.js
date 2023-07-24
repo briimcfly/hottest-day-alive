@@ -1,11 +1,10 @@
 const APIKey = '0040c54f9bc97c402ce34384520d63ae';
 const input = document.querySelector(`input`);
+const recentBlock = document.querySelector('#recent');
 
 //Check local storage for any stored results 
 let storedCities = localStorage.getItem("cityNames");
 
-//If data exists, parse it.. else, return an empty array
-let cityNames = storedCities ? JSON.parse(storedCities) : [];
 console.log(storedCities);
 
 //a function for clearing fields
@@ -29,6 +28,10 @@ function findCity(){
     
     fetch (queryURL)
     .then(function (response) {
+    //If data exists, parse it.. else, return an empty array
+    let cityNames = storedCities ? JSON.parse(storedCities) : [];
+
+        //if the response is good...
         if (response.status === 200 ) {
             //check to see if city exists in array... 
             if(!cityNames.includes(cityName)){
@@ -38,20 +41,20 @@ function findCity(){
                 localStorage.setItem("cityNames", JSON.stringify(cityNames));
             }
 
-
             //clear the input back to placeholder text
             clear(input);
         }
+        //if the response isn't good...
         else {
             //clear the input back to placeholder text
             clear(input);
 
             //Briefly show an error message 
             let error = document.querySelector(`#error-message`);
-            error.style.display = "block";
+            error.style.visibility = "visible";
 
             setTimeout(function(){
-                error.style.display = "none";
+                error.style.visibility = "hidden";
             },1500)
         }
 
@@ -72,7 +75,8 @@ function createButton(cityName){
     var cityButton = document.createElement(`button`);
     cityButton.className = "button is-light"
     cityButton.textContent = cityName;
-    document.querySelector("#cities").append(cityButton)
+    document.querySelector("#city-list").append(cityButton)
+    recentBlock.style.visibility = "visible";
 }
 
 //Function that adds buttons for each element in cityNames
@@ -80,10 +84,18 @@ function loadCities(){
     for(const cityName of cityNames) {
         createButton(cityName);
     }
+    if(cityNames.length > 0) {
+        recentBlock.style.visibility = "visible";
+    }
 }
 
 //Render Cities from Local Storage 
 window.addEventListener('load', loadCities);
 
 
-  
+ //function to clear local storage 
+ const clearButton = document.querySelector('#clear').addEventListener('click', function(){
+    localStorage.clear();
+    document.querySelector('#city-list').innerHTML = "";
+    recentBlock.style.visibility = "hidden";
+ });

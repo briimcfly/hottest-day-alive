@@ -1,3 +1,3 @@
-#error-message{
-    display:none;
+#error-message, #recent{
+    visibility:hidden;
 }
