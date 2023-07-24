@@ -68,28 +68,32 @@ function findCity(){
         function organizeData(data){
             const organizedWeather = {};
             data.list.forEach((item) => {
-                const{dt, main: {temp_min, temp_max}} = item;
+                //destructure weather data
+                const{dt, main: {temp_min, temp_max, humidity}, wind: {speed} } = item;
+                //get todays date to exclude from 5 day forecast
                 const normalDate = dayjs.unix(dt).format(`ddd`);
-                console.log(normalDate);
-
-                if(organizedWeather.hasOwnProperty(normalDate)) {
-                    organizedWeather[normalDate].temp_min = Math.min(organizedWeather[normalDate].temp_min, temp_min);
-                    organizedWeather[normalDate].temp_max = Math.max(organizedWeather[normalDate].temp_max, temp_max);
-                }
-                else {
-                    organizedWeather[normalDate] = {normalDate, temp_min, temp_max};
+                const today = dayjs().format(`ddd`);
+                if(normalDate !== today){
+                    if(organizedWeather.hasOwnProperty(normalDate)) {
+                        organizedWeather[normalDate].temp_min = Math.min(organizedWeather[normalDate].temp_min, temp_min);
+                        organizedWeather[normalDate].temp_max = Math.max(organizedWeather[normalDate].temp_max, temp_max);
+                        organizedWeather[normalDate].humidity = Math.max(organizedWeather[normalDate].humidity, humidity);
+                        organizedWeather[normalDate].wind.speed = Math.max(organizedWeather[normalDate].wind.speed, speed);
+                    }
+                    else {
+                        organizedWeather[normalDate] = {normalDate, temp_min, temp_max, humidity, wind: {speed}};
+                    }
                 }
             })
-            const result = Object.values(organizedWeather);
-            return result;
+            return Object.values(organizedWeather);
         }
-        const newArray = organizeData(data);
-        console.log(newArray);
+
+        const forecast = organizeData(data);
+        console.log(forecast);
     });
 
 
 }
-
 
 //Create Button function 
 function createButton(cityName){
