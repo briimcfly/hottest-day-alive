@@ -1,6 +1,7 @@
 const APIKey = config.MY_KEY;
 const input = document.querySelector(`input`);
 const recentBlock = document.querySelector('#recent');
+const forecastEl = document.querySelector(`#fiveday`);
 
 //Check local storage for any stored results 
 let storedCities = localStorage.getItem("cityNames");
@@ -14,6 +15,8 @@ console.log(storedCities);
 function clear(element){
     element.value="";
 }
+
+
 
 //Function runs on "Search" button click
 function findCity(){
@@ -75,24 +78,64 @@ function findCity(){
                 const today = dayjs().format(`ddd`);
                 if(normalDate !== today){
                     if(organizedWeather.hasOwnProperty(normalDate)) {
-                        organizedWeather[normalDate].temp_min = Math.min(organizedWeather[normalDate].temp_min, temp_min);
-                        organizedWeather[normalDate].temp_max = Math.max(organizedWeather[normalDate].temp_max, temp_max);
-                        organizedWeather[normalDate].humidity = Math.max(organizedWeather[normalDate].humidity, humidity);
-                        organizedWeather[normalDate].wind.speed = Math.max(organizedWeather[normalDate].wind.speed, speed);
+                        organizedWeather[normalDate].temp_min = Math.min(organizedWeather[normalDate].temp_min, Math.round(temp_min));
+                        organizedWeather[normalDate].temp_max = Math.max(organizedWeather[normalDate].temp_max, Math.round(temp_max));
+                        organizedWeather[normalDate].humidity = Math.max(organizedWeather[normalDate].humidity, Math.round(humidity));
+                        organizedWeather[normalDate].speed = Math.max(organizedWeather[normalDate].speed, Math.round(speed));
                     }
                     else {
-                        organizedWeather[normalDate] = {normalDate, temp_min, temp_max, humidity, wind: {speed}};
+                        organizedWeather[normalDate] = {normalDate, temp_min, temp_max, humidity, speed};
                     }
                 }
             })
             return Object.values(organizedWeather);
         }
 
+
+
         const forecast = organizeData(data);
         console.log(forecast);
+        console.log(forecast[0].normalDate);
+        fiveForecast(forecast);
+        console.log(forecast.length);
     });
 
 
+}
+
+//Create Forecast Function
+function fiveForecast(x){
+    for (i=0; i < x.length; i++){
+        var card = document.createElement(`div`);
+        card.className = "card column mx-8";
+        forecastEl.append(card);
+        var cardContent = document.createElement(`div`);
+        cardContent.className = "card-content";
+        card.append(cardContent);
+        //date
+        var date = document.createElement(`p`);
+        date.className = "title is-5";
+        date.textContent = `${x[i].normalDate}`;
+        cardContent.append(date);
+        //high
+        var high = document.createElement(`p`);
+        high.textContent = `High: ${x[i].temp_max}`;
+        cardContent.append(high);
+        //low
+        var low = document.createElement(`p`);
+        low.textContent = `Low: ${x[i].temp_min}`;
+        cardContent.append(low);
+        //humidity
+        var hum = document.createElement(`p`);
+        hum.textContent = `Humidity: ${x[i].humidity}`;
+        cardContent.append(hum);
+        //wind speed
+        var wSpeed = document.createElement(`p`);
+        wSpeed.textContent = `Wind Speed: ${x[i].speed}`;
+        cardContent.append(wSpeed);
+
+        console.log(`on ${x[i].normalDate} the min temp is ${x[i].temp_min}`)
+    }
 }
 
 //Create Button function 
