@@ -139,7 +139,7 @@ function fiveForecast(x){
         cardContent.append(hum);
         //wind speed
         var wSpeed = document.createElement(`p`);
-        wSpeed.textContent = `Wind Speed: ${x[i].speed}`;
+        wSpeed.textContent = `Wind Speed: ${x[i].speed} MPH`;
         cardContent.append(wSpeed);
 
         console.log(`on ${x[i].normalDate} the min temp is ${x[i].temp_min}`)
