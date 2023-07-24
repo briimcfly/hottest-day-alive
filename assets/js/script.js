@@ -30,7 +30,8 @@ function getData(cityName){
         if (response.status === 200 ) {
             //check to see if city exists in array... 
             if(!cityNames.includes(cityName)){
-                createButton(cityName);
+                clearButtonStyles();
+                createButton(cityName, false, true);
                 cityNames.push(cityName);
                 //Add to local storage
                 localStorage.setItem("cityNames", JSON.stringify(cityNames));
@@ -154,34 +155,48 @@ function fiveForecast(x){
 }
 
 //Create Button function 
-function createButton(cityName){
+function createButton(cityName, isFirst, isNew){
     var cityButton = document.createElement(`button`);
     cityButton.className = "button is-light mb-8 citybtn"
     cityButton.textContent = cityName;
+    //Select the first button in the list on Page Load
+    if (isFirst){
+        cityButton.classList.add('is-link');
+        getData(cityName);
+    }
+    if (isNew) {
+        cityButton.classList.add('is-link');
+    }
     document.querySelector("#city-list").append(cityButton)
-    recentBlock.style.visibility = "visible";    
+    recentBlock.style.visibility = "visible";   
 }
 
 //Add Event Listners to City Buttons so Users can select previous searched city. 
 document.querySelector("#city-list").addEventListener('click', function(event) {
     if (event.target.classList.contains('citybtn')) {
-        const buttons = document.querySelectorAll('.citybtn');
-        buttons.forEach(button => {
-            button.classList.remove('is-link');
-        });
+        clearButtonStyles();
         console.log(event.target.textContent);
         event.target.classList.add('is-link');
         getData(event.target.textContent);
     }
 });
 
+function clearButtonStyles(){
+    let buttons = document.querySelectorAll('.citybtn');
+    buttons.forEach(button => {
+        button.classList.remove('is-link');
+    });
+}
+
 //Function that adds buttons for each element in cityNames
 function loadCities(){
-    for(const cityName of cityNames) {
-        createButton(cityName);
+    for (i = 0; i < cityNames.length; i++) {
+        const cityName = cityNames[i];
+        createButton(cityName, i === 0); 
     }
     if(cityNames.length > 0) {
         recentBlock.style.visibility = "visible";
+    
     }
 }
 
