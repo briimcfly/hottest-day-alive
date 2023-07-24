@@ -27,7 +27,7 @@ function findCity(){
     var cityName = multiWord.join(` `);
 
     //Query URL
-    var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
+    var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + APIKey + "&units=imperial";
     
     fetch (queryURL)
     .then(function (response) {
@@ -65,8 +65,27 @@ function findCity(){
     }) 
     .then(function (data){
         console.log(data);
-    //    error.show(); 
-    })
+        function organizeData(data){
+            const organizedWeather = {};
+            data.list.forEach((item) => {
+                const{dt, main: {temp_min, temp_max}} = item;
+                const normalDate = dayjs.unix(dt).format(`ddd`);
+                console.log(normalDate);
+
+                if(organizedWeather.hasOwnProperty(normalDate)) {
+                    organizedWeather[normalDate].temp_min = Math.min(organizedWeather[normalDate].temp_min, temp_min);
+                    organizedWeather[normalDate].temp_max = Math.max(organizedWeather[normalDate].temp_max, temp_max);
+                }
+                else {
+                    organizedWeather[normalDate] = {normalDate, temp_min, temp_max};
+                }
+            })
+            const result = Object.values(organizedWeather);
+            return result;
+        }
+        const newArray = organizeData(data);
+        console.log(newArray);
+    });
 
 
 }
@@ -102,3 +121,5 @@ window.addEventListener('load', loadCities);
     recentBlock.style.visibility = "hidden";
     location.reload();
  });
+
+
