@@ -122,8 +122,8 @@ function getForecastData(cityName){
                 //destructure weather data
                 const{dt, main: {temp_min, temp_max, humidity}, wind:{speed}, weather: [{ main: icon }] } = item;
                 //get todays date to exclude from 5 day forecast
-                const normalDate = dayjs.unix(dt).format(`ddd`);
-                const today = dayjs().format(`ddd`);
+                const normalDate = dayjs.unix(dt).format(`dddd`);
+                const today = dayjs().format(`dddd`);
                 if(normalDate !== today){
                     if(organizedWeather.hasOwnProperty(normalDate)) {
                         organizedWeather[normalDate].temp_min = Math.min(organizedWeather[normalDate].temp_min, temp_min);
