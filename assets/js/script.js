@@ -18,7 +18,9 @@ weatherIcon = "";
 
 //Function for displaying weather condition 
 function weatherCondition(condition){
-    console.log(condition);
+
+    //remove current icons and reset the initial fa-solid icon
+
     if (condition == "Clear"){
         weatherIcon = "fa-sun";
     }
@@ -64,8 +66,7 @@ function getCurrentData(cityName){
             document.querySelector(`#current-city`).textContent = currentCity; // Render City
             document.querySelector(`#current-date`).textContent = currentDate ; // Render Date
             weatherCondition(currentIcon); //Get the icon
-            document.querySelector(`#current-icon`).classList.add(`${weatherIcon}`) // Render Icon
-            document.querySelector(`#current-icon`).textContent = currentIcon; // Render Icon Text 
+            document.querySelector(`#current-icon`).className = `fa-solid ${weatherIcon}` // Render Icon
             document.querySelector(`#current-temp`).textContent = currentTemp; // Render Temp
             document.querySelector(`#current-wind`).textContent = currentWind; // Render Wind 
             document.querySelector(`#current-humidity`).textContent = currentHumidity; // Render Humidity 
@@ -114,11 +115,12 @@ function getForecastData(cityName){
         
     }) 
     .then(function (data){
+        console.log(data);
         function organizeData(data){
             const organizedWeather = {};
             data.list.forEach((item) => {
                 //destructure weather data
-                const{dt, main: {temp_min, temp_max, humidity}, wind: {speed} } = item;
+                const{dt, main: {temp_min, temp_max, humidity}, wind:{speed}, weather: [{ main: icon }] } = item;
                 //get todays date to exclude from 5 day forecast
                 const normalDate = dayjs.unix(dt).format(`ddd`);
                 const today = dayjs().format(`ddd`);
@@ -128,12 +130,15 @@ function getForecastData(cityName){
                         organizedWeather[normalDate].temp_max = Math.max(organizedWeather[normalDate].temp_max, temp_max);
                         organizedWeather[normalDate].humidity = Math.max(organizedWeather[normalDate].humidity, humidity);
                         organizedWeather[normalDate].speed = Math.max(organizedWeather[normalDate].speed, speed);
+                        organizedWeather[normalDate].icon = icon;
+                        
                     }
                     else {
-                        organizedWeather[normalDate] = {normalDate, temp_min, temp_max, humidity, speed};
+                        organizedWeather[normalDate] = {normalDate, temp_min, temp_max, humidity, speed, icon};
                     }
                 }
             })
+            console.log(organizedWeather);
             return Object.values(organizedWeather);
         }
 
@@ -190,6 +195,11 @@ function fiveForecast(x){
         date.className = "title is-5";
         date.textContent = `${x[i].normalDate}`;
         cardContent.append(date);
+        //icon
+        weatherCondition(x[i].icon);
+        var forecastedIcon = document.createElement(`p`);
+        forecastedIcon.className = `fa-solid ${weatherIcon}`;
+        cardContent.append(forecastedIcon);
         //high temp
         var high = document.createElement(`p`);
         high.textContent = `High: ${x[i].temp_max}`;
