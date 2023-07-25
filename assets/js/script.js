@@ -14,6 +14,34 @@ function clear(element){
     element.value="";
 }
 
+weatherIcon = "";
+
+//Function for displaying weather condition 
+function weatherCondition(condition){
+    console.log(condition);
+    if (condition == "Clear"){
+        weatherIcon = "fa-sun";
+    }
+    else if (condition == "Clouds"){
+        weatherIcon = "fa-clouds";
+    }
+    else if (condition == "Atmosphere"){
+        weatherIcon = "fa-water";
+    }
+    else if (condition == "Snow"){
+        weatherIcon = "fa-snowflakes";
+    }
+    else if (condition == "Rain"){
+        weatherIcon = "fa-raindrops";
+    }
+    else if (condition == "Drizzle"){
+        weatherIcon = "fa-cloud-drizzle";
+    }
+    else if (condition == "Thunderstorm"){
+        weatherIcon = "fa-cloud-bolt";
+    }
+}
+
 //Fetch Current Weather Function 
 function getCurrentData(cityName){
         //Query URL
@@ -24,27 +52,23 @@ function getCurrentData(cityName){
         })
         .then(function (data){
 
-
+            // Variables for Current Weather
             var currentCity = data.name;
             var currentTemp = Math.round(data.main.temp);
             var currentIcon = data.weather[0].main;
             var currentWind = Math.round(data.wind.speed);
             var currentHumidity = Math.round(data.main.humidity);
-
-            console.log(currentCity); //city name
-            console.log(`${currentTemp} Current Temp`); //temp
-            console.log(`${currentIcon} Icon`); //icon
-            console.log(`${currentWind} Wind Speed`); //wind speed
-            console.log(`${currentHumidity} Humidity`); //humidity
+            var currentDate = dayjs.unix(data.dt).format(`dddd MMM, D`);
 
             //Render Current Weather Section 
-            var currentWeatherEl = document.querySelector(`#current-weather`) 
-            document.querySelector(`#current-city`).textContent = currentCity; // City
-            // document.querySelector(`#current-date`).textContent(); // Date
-            // document.querySelector(`#current-icon`).textContent(); // Icon
-            document.querySelector(`#current-temp`).textContent = currentTemp; // Temp
-            document.querySelector(`#current-wind`).textContent = currentWind; // Wind 
-            document.querySelector(`#current-humidity`).textContent = currentHumidity; // Humidity 
+            document.querySelector(`#current-city`).textContent = currentCity; // Render City
+            document.querySelector(`#current-date`).textContent = currentDate ; // Render Date
+            weatherCondition(currentIcon); //Get the icon
+            document.querySelector(`#current-icon`).classList.add(`${weatherIcon}`) // Render Icon
+            document.querySelector(`#current-icon`).textContent = currentIcon; // Render Icon Text 
+            document.querySelector(`#current-temp`).textContent = currentTemp; // Render Temp
+            document.querySelector(`#current-wind`).textContent = currentWind; // Render Wind 
+            document.querySelector(`#current-humidity`).textContent = currentHumidity; // Render Humidity 
 
         })
 }
