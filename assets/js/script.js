@@ -14,8 +14,43 @@ function clear(element){
     element.value="";
 }
 
-//Fetch Function 
-function getData(cityName){
+//Fetch Current Weather Function 
+function getCurrentData(cityName){
+        //Query URL
+        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey + "&units=imperial";
+        fetch (queryURL)
+        .then(function (response){
+            return response.json();
+        })
+        .then(function (data){
+
+
+            var currentCity = data.name;
+            var currentTemp = Math.round(data.main.temp);
+            var currentIcon = data.weather[0].main;
+            var currentWind = Math.round(data.wind.speed);
+            var currentHumidity = Math.round(data.main.humidity);
+
+            console.log(currentCity); //city name
+            console.log(`${currentTemp} Current Temp`); //temp
+            console.log(`${currentIcon} Icon`); //icon
+            console.log(`${currentWind} Wind Speed`); //wind speed
+            console.log(`${currentHumidity} Humidity`); //humidity
+
+            //Render Current Weather Section 
+            var currentWeatherEl = document.querySelector(`#current-weather`) 
+            document.querySelector(`#current-city`).textContent = currentCity; // City
+            // document.querySelector(`#current-date`).textContent(); // Date
+            // document.querySelector(`#current-icon`).textContent(); // Icon
+            document.querySelector(`#current-temp`).textContent = currentTemp; // Temp
+            document.querySelector(`#current-wind`).textContent = currentWind; // Wind 
+            document.querySelector(`#current-humidity`).textContent = currentHumidity; // Humidity 
+
+        })
+}
+
+//Fetch Forecast Function 
+function getForecastData(cityName){
 
     //Query URL
     var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + APIKey + "&units=imperial";
@@ -55,7 +90,6 @@ function getData(cityName){
         
     }) 
     .then(function (data){
-        console.log(data);
         function organizeData(data){
             const organizedWeather = {};
             data.list.forEach((item) => {
@@ -82,9 +116,6 @@ function getData(cityName){
 
 
         const forecast = organizeData(data);
-        console.log(forecast);
-        console.log(forecast[0].normalDate);
-        console.log(forecast.length);
         //Round all numbers
         for (i=0; i < forecast.length; i++){
             forecast[i].temp_min = Math.round(forecast[i].temp_min);
@@ -110,10 +141,12 @@ function findCity(userEntered){
     }
     var cityName = multiWord.join(` `);
 
-    getData(cityName);
+    getForecastData(cityName);
+    getCurrentData(cityName);
 
 }
 
+//Create Today's Weather Function 
 
 
 //Create Forecast Function
@@ -160,7 +193,8 @@ function createButton(cityName, isFirst, isNew){
     //Select the first button in the list on Page Load
     if (isFirst){
         cityButton.classList.add('is-link');
-        getData(cityName);
+        getForecastData(cityName);
+        getCurrentData(cityName);
     }
     if (isNew) {
         cityButton.classList.add('is-link');
@@ -173,9 +207,9 @@ function createButton(cityName, isFirst, isNew){
 document.querySelector("#city-list").addEventListener('click', function(event) {
     if (event.target.classList.contains('citybtn')) {
         clearButtonStyles();
-        console.log(event.target.textContent);
         event.target.classList.add('is-link');
-        getData(event.target.textContent);
+        getForecastData(event.target.textContent);
+        getCurrentData(event.target.textContent);
     }
 });
 
