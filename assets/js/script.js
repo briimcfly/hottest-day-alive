@@ -2,6 +2,7 @@ const APIKey = config.MY_KEY;
 const input = document.querySelector(`input`);
 const recentBlock = document.querySelector('#recent');
 const forecastEl = document.querySelector(`#fiveday`);
+const forecastContainerEl = document.querySelector(`#fivedaySection`);
 
 //Check local storage for any stored results 
 let storedCities = localStorage.getItem("cityNames");
@@ -14,12 +15,8 @@ function clear(element){
     element.value="";
 }
 
-weatherIcon = "";
-
 //Function for displaying weather condition 
 function weatherCondition(condition){
-
-    //remove current icons and reset the initial fa-solid icon
 
     if (condition == "Clear"){
         weatherIcon = "fa-sun";
@@ -67,9 +64,10 @@ function getCurrentData(cityName){
             document.querySelector(`#current-date`).textContent = currentDate ; // Render Date
             weatherCondition(currentIcon); //Get the icon
             document.querySelector(`#current-icon`).className = `fa-solid ${weatherIcon}` // Render Icon
-            document.querySelector(`#current-temp`).textContent = currentTemp; // Render Temp
-            document.querySelector(`#current-wind`).textContent = currentWind; // Render Wind 
-            document.querySelector(`#current-humidity`).textContent = currentHumidity; // Render Humidity 
+            document.querySelector(`#current-condition`).textContent = currentIcon; // Render Condition Text
+            document.querySelector(`#current-temp`).textContent = `${currentTemp}\u00b0`; // Render Temp
+            document.querySelector(`#current-wind`).textContent = `${currentWind} mph`; // Render Wind 
+            document.querySelector(`#current-humidity`).textContent = `${currentHumidity}%`; // Render Humidity 
 
         })
 }
@@ -115,7 +113,6 @@ function getForecastData(cityName){
         
     }) 
     .then(function (data){
-        console.log(data);
         function organizeData(data){
             const organizedWeather = {};
             data.list.forEach((item) => {
@@ -138,14 +135,12 @@ function getForecastData(cityName){
                     }
                 }
             })
-            console.log(organizedWeather);
             return Object.values(organizedWeather);
         }
 
 
-
+        //Round all numbers in organized Data
         const forecast = organizeData(data);
-        //Round all numbers
         for (i=0; i < forecast.length; i++){
             forecast[i].temp_min = Math.round(forecast[i].temp_min);
             forecast[i].temp_max = Math.round(forecast[i].temp_max);
@@ -175,48 +170,65 @@ function findCity(userEntered){
 
 }
 
-//Create Today's Weather Function 
-
-
 //Create Forecast Function
 function fiveForecast(x){
     //clear the previous elements
     forecastEl.innerHTML = "";
+    forecastContainerEl.innerHTML = "";
+
+    //Five Day Forecast Title
+    var fiveForecastTitle = document.createElement(`p`);
+    fiveForecastTitle.className = "title is-5";
+    fiveForecastTitle.textContent = "5-Day Forecast";
+
+    //Create the 5 Day Forecast Cards
     for (i=0; i < x.length; i++){
         //card
         var card = document.createElement(`div`);
-        card.className = "card column mx-8";
+        card.className = "card column has-background-info-light p-0";
         forecastEl.append(card);
+        //Date
+        var header = document.createElement(`header`); //create card header
+        header.className = "card-header"; // add card-header class
+        card.append(header); // add header to card
+        var date = document.createElement(`p`);
+        date.className = "card-header-title";
+        date.textContent = `${x[i].normalDate}`;
+        header.append(date);
+        //icon
+        weatherCondition(x[i].icon);
+        var iconContainer = document.createElement(`div`);
+        iconContainer.className = "card-header-icon";
+        header.append(iconContainer);
+        var iconSpan = document.createElement(`span`);
+        iconSpan.className = "icon";
+        iconContainer.append(iconSpan);
+        var forecastedIcon = document.createElement(`i`);
+        forecastedIcon.className = `fa-solid ${weatherIcon}`;
+        forecastedIcon.setAttribute(`title`,(x[i].icon)); //accessibility add title
+        iconSpan.append(forecastedIcon);
+        //Card Content
         var cardContent = document.createElement(`div`);
         cardContent.className = "card-content";
         card.append(cardContent);
-        //date
-        var date = document.createElement(`p`);
-        date.className = "title is-5";
-        date.textContent = `${x[i].normalDate}`;
-        cardContent.append(date);
-        //icon
-        weatherCondition(x[i].icon);
-        var forecastedIcon = document.createElement(`p`);
-        forecastedIcon.className = `fa-solid ${weatherIcon}`;
-        cardContent.append(forecastedIcon);
         //high temp
         var high = document.createElement(`p`);
-        high.textContent = `High: ${x[i].temp_max}`;
+        high.textContent = `High: ${x[i].temp_max}\u00b0`;
         cardContent.append(high);
         //low temp
         var low = document.createElement(`p`);
-        low.textContent = `Low: ${x[i].temp_min}`;
+        low.textContent = `Low: ${x[i].temp_min}\u00b0`;
         cardContent.append(low);
         //humidity
         var hum = document.createElement(`p`);
-        hum.textContent = `Humidity: ${x[i].humidity}`;
+        hum.textContent = `Humidity: ${x[i].humidity}%`;
         cardContent.append(hum);
         //wind speed
         var wSpeed = document.createElement(`p`);
-        wSpeed.textContent = `Wind Speed: ${x[i].speed} MPH`;
+        wSpeed.textContent = `Wind: ${x[i].speed}mph`;
         cardContent.append(wSpeed);
     }
+    forecastContainerEl.append(fiveForecastTitle);
 }
 
 //Create Button function 
@@ -247,6 +259,7 @@ document.querySelector("#city-list").addEventListener('click', function(event) {
     }
 });
 
+//Clear the button styles
 function clearButtonStyles(){
     let buttons = document.querySelectorAll('.citybtn');
     buttons.forEach(button => {

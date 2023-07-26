@@ -3,35 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Bulma -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+<!-- Main Styles -->
   <link href="assets/css/main.css" rel="stylesheet">
+<!-- jQuery -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- Font Awesome -->
   <link rel="stylesheet" href="https://kit.fontawesome.com/1d33aad484.css" crossorigin="anonymous">
+<!-- dayJS -->
   <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+<!-- Config & Main JS Scripts -->
   <script src ="assets/js/config.js"></script>
   <script src="assets/js/script.js" defer></script>
-  <title>Hottest Day Alive</title>
+  <title>Javascript Weather App</title>
 </head>
 <body>
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-          <a class="navbar-item" href="https://bulma.io">
-            <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: Free, open source, and modern CSS framework based on Flexbox" width="112" height="28">
-          </a>
-  
-        </div>
-    </nav>
-
+<!-- Header/Nav Section -->
+  <section class="hero is-info mb-5">
+    <div class="hero-body">
+      <p class="title">
+        Javascript Weather App
+      </p>
+      <p class="subtitle">
+        Get Current Weather and 5-Day Forecast
+      </p>
+    </div>
+  </section>
+<!-- Main Page Section -->
     <div class ="container is-fluid">
         <section id="main" class="columns">
+<!-- City Search -->
             <div id="city-search" class = "box column is-one-quarter">
               <input class="input" type="text" placeholder="Search by City Name">
-              <button class="button is-primary" type = "submit" onclick="findCity()">Search</button>
-            
+              <button class="button is-info" type = "submit" onclick="findCity()">Search</button>
               <div id = "cities">
+<!-- Error Message -->
                 <div id="error-message" class="has-text-danger">City Name not Found, Please try again</div>
-
                 <div id = "recent" class = "columns">
+<!-- Recent City Buttons -->
                   <h5 class = "column title is-6">Recent Cities</h5>
                   <button id= "clear" class="button is-text column">Clear List</button>
                 </div>
@@ -39,29 +49,54 @@
               </div>
             </div>
             <div class ="column">
+<!-- Current Weather Section -->
               <section id="current-weather">
-                <p id = "current-city" class="title is-2"></p>
-                <p id = "current-date" classs="title is-5"></p>
-                <i id = "current-icon" class="fa-solid"></i>
-                <p id="current-temp"><span class="current-heading">Temp: </span></p>
-                <p id="current-wind"><span class="current-heading">Wind: </span></p>
-                <p id ="current-humidity"><span class="current-heading">Humidity: </span></p>
+                <section class="hero is-info">
+                  <div class="hero-body">
+                    <p id = "current-city" class="title">
+                      Search for a City
+                    </p>
+                    <p id = "current-date" class="subtitle">
+                      to see current weather data
+                    </p>
+                    <nav class="level">
+                      <div class="level-item has-text-centered">
+                        <div>
+                          <p id = "current-condition" class="heading">Condition</p>
+                          <p class="title"><i id = "current-icon" class="fa-solid"></i></p>
+                        </div>
+                      </div>
+                      <div class="level-item has-text-centered">
+                        <div>
+                          <p class="heading">Temperature</p>
+                          <p id="current-temp" class="title">##</p>
+                        </div>
+                      </div>
+                      <div class="level-item has-text-centered">
+                        <div>
+                          <p class="heading">Wind</p>
+                          <p id="current-wind" class="title">##</p>
+                        </div>
+                      </div>
+                      <div class="level-item has-text-centered">
+                        <div>
+                          <p class="heading">Humidity</p>
+                          <p id ="current-humidity" class="title">##</p>
+                        </div>
+                      </div>
+                    </nav>
+                  </div>
+                </section>
               </section>
-
-              <p class = "title is-5">5-Day Forecast:</p>              
-                <div id = "fiveday" class = "columns">
-                
-                      <!-- <i class="fa-solid fa-clouds"></i> -->
-
+<!-- Five Day Forecast -->
+              <section class="hero is-info">
+                <div class="hero-body">
+                  <div id = "fivedaySection" class="title"></div>
+                  <div id = "fiveday" class = "columns"></div>
                 </div>
+              </section>
             </div>
         </section>
-        
-
-        
-
     </div>
-
-
 </body>
 </html>

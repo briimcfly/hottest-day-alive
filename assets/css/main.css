@@ -1,7 +1,10 @@
-#error-message, #recent{
-    visibility:hidden;
+/* Main Container Styling */
+#main{
+    display:flex;
+    gap:24px;
 }
 
+/* Search Section  */
 #city-list{
     display:flex;
     gap:12px;
@@ -13,26 +16,21 @@
     gap:12px;
 }
 
+/* Set Initial Visibility of Error Messaging & the Recent City Header */
+#error-message, #recent{
+    visibility:hidden;
+}
+
 #error-message {
     display:flex;
     justify-content:center;
     margin-bottom:12px;
 }
 
+/* Forecast Styling */
 #fiveday {
     display:flex;
     gap:8px;
     padding:8px;
 
-}
-
-#main{
-    display:flex;
-    gap:24px;
-}
-
-#current-weather{
-    border:1px solid black;
-    padding:8px;
-    margin-bottom:16px;
 }
