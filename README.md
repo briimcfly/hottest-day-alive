@@ -29,7 +29,7 @@ The goal of this project is to create a weather dashboard that runs in the brows
 * Fetch
 
 ## Deployment 
-I have deployed my Javascript Weather App on the web to make it live and accessible. You can view the weather in any city by following this link: [Javascript Weather App]()
+I have deployed my Javascript Weather App on the web to make it live and accessible. You can view the weather in any city by following this link: [Javascript Weather App](https://briimcfly.github.io/hottest-day-alive/)
 
 ## Reflection
 This project has allowed me to apply the core skills I have recently learned and put them into practice. During development, I had the opportunity to deepen my understanding of the localStorage property, fetching data from API's, and Object Arrays . Additionally, I developed a deeper appreciation for for the importance code commenting, and the development principal DRY. (Don't repeat yourself). In the future, I would like to spend more time improving the design of the page.
